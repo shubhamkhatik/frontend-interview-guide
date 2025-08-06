@@ -215,7 +215,7 @@ Explanation: Rotating `[10, 20, 30, 40, 50, 60]` four steps to the right results
 
 
 ###  Solution
-
+```
 function solution(n, arr, k) {
 // Since rotating by n steps brings the array to original state,
 // we only need to rotate by k % n steps
@@ -229,7 +229,7 @@ const rotated = arr.slice(-steps).concat(arr.slice(0, n - steps));
 console.log(rotated.join(' '));
 }
 
-
+```
 
 ---
 
