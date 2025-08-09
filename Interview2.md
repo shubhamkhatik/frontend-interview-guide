@@ -1,25 +1,28 @@
 ## Interview Questions Star component
-## solution 1
-### Star.js
-```
-import React from 'react';
+
+### Solution 1
+
+#### Star.js
+
+```jsx
+import React from "react";
 
 const Star = ({ filled, half, onClick, onMouseMove }) => {
   // Decide which star to show
-  let starChar = '☆';
-  if (filled) starChar = '★';
-  else if (half) starChar = '⯨'; // or use CSS for better visuals
+  let starChar = "☆";
+  if (filled) starChar = "★";
+  else if (half) starChar = "⯨"; // or use CSS for better visuals
 
   return (
     <span
       onClick={onClick}
       onMouseMove={onMouseMove}
       style={{
-        cursor: 'pointer',
-        color: filled || half ? '#ffc107' : '#e4e5e9',
-        fontSize: '32px',
-        transition: 'color 200ms',
-        userSelect: 'none',
+        cursor: "pointer",
+        color: filled || half ? "#ffc107" : "#e4e5e9",
+        fontSize: "32px",
+        transition: "color 200ms",
+        userSelect: "none",
       }}
     >
       {starChar}
@@ -30,13 +33,14 @@ const Star = ({ filled, half, onClick, onMouseMove }) => {
 export default Star;
 ```
 
-### StarRating.js
-```
-import React, { useState } from 'react';
-import Star from './Star';
+#### StarRating.js
+
+```jsx
+import React, { useState } from "react";
+import Star from "./Star";
 
 const StarRatingWidget = ({ totalStars = 5 }) => {
-  const [rating, setRating] = useState(0);        // Selected rating
+  const [rating, setRating] = useState(0); // Selected rating
   const [hoverRating, setHoverRating] = useState(0); // Rating on hover
 
   const handleClick = (e, index) => {
@@ -52,7 +56,7 @@ const StarRatingWidget = ({ totalStars = 5 }) => {
   };
 
   return (
-    <div style={{ display: 'flex', gap: '8px' }}>
+    <div style={{ display: "flex", gap: "8px" }}>
       {[...Array(totalStars)].map((_, index) => {
         const displayRating = hoverRating || rating;
         const { filled, half } = getFillState(index, displayRating);
@@ -64,9 +68,7 @@ const StarRatingWidget = ({ totalStars = 5 }) => {
             half={half}
             onClick={(e) => handleClick(e, index)}
             onMouseMove={(e) => {
-              const isHalf = (
-                  e.nativeEvent.offsetX < e.target.offsetWidth / 2
-              );
+              const isHalf = e.nativeEvent.offsetX < e.target.offsetWidth / 2;
               setHoverRating(index + (isHalf ? 0.5 : 1));
             }}
             onMouseLeave={() => setHoverRating(0)}
@@ -80,13 +82,22 @@ const StarRatingWidget = ({ totalStars = 5 }) => {
 export default StarRatingWidget;
 ```
 
-## solution 2
+### Solution 2
 
-### Star.js
-```
-import React from 'react';
+#### Star.js
 
-const Star = ({ filled, half, onClick, onMouseMove, onMouseLeave, onKeyDown, tabIndex }) => {
+```jsx
+import React from "react";
+
+const Star = ({
+  filled,
+  half,
+  onClick,
+  onMouseMove,
+  onMouseLeave,
+  onKeyDown,
+  tabIndex,
+}) => {
   return (
     <svg
       onClick={onClick}
@@ -98,10 +109,10 @@ const Star = ({ filled, half, onClick, onMouseMove, onMouseLeave, onKeyDown, tab
       height="32"
       viewBox="0 0 24 24"
       style={{
-        cursor: 'pointer',
-        color: filled || half ? '#ffc107' : '#e4e5e9',
-        transition: 'color 200ms',
-        outline: 'none',
+        cursor: "pointer",
+        color: filled || half ? "#ffc107" : "#e4e5e9",
+        transition: "color 200ms",
+        outline: "none",
       }}
       role="button"
       aria-label="Star rating"
@@ -109,7 +120,7 @@ const Star = ({ filled, half, onClick, onMouseMove, onMouseLeave, onKeyDown, tab
       {/* Full star path */}
       <path
         d="M12 .587l3.668 7.431L24 9.748l-6 5.854 1.417 8.265L12 19.771l-7.417 4.096L6 15.602 0 9.748l8.332-1.73z"
-        fill={filled ? '#ffc107' : '#e4e5e9'}
+        fill={filled ? "#ffc107" : "#e4e5e9"}
       />
       {/* Half star overlay */}
       {half && (
@@ -123,16 +134,13 @@ const Star = ({ filled, half, onClick, onMouseMove, onMouseLeave, onKeyDown, tab
 };
 
 export default Star;
-
-
 ```
 
+#### StarRating.js
 
-### StarRating.js
-
-```
-import React, { useState } from 'react';
-import Star from './Star';
+```jsx
+import React, { useState } from "react";
+import Star from "./Star";
 
 const StarRatingWidget = ({ totalStars = 5 }) => {
   const [rating, setRating] = useState(0);
@@ -155,13 +163,13 @@ const StarRatingWidget = ({ totalStars = 5 }) => {
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'ArrowRight') {
+    if (e.key === "ArrowRight") {
       setRating((prev) => Math.min(prev + 0.5, totalStars));
     }
-    if (e.key === 'ArrowLeft') {
+    if (e.key === "ArrowLeft") {
       setRating((prev) => Math.max(prev - 0.5, 0));
     }
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       setHoverRating(0); // lock in rating
     }
   };
@@ -175,7 +183,7 @@ const StarRatingWidget = ({ totalStars = 5 }) => {
   const displayRating = hoverRating || rating;
 
   return (
-    <div style={{ display: 'flex', gap: '8px' }}>
+    <div style={{ display: "flex", gap: "8px" }}>
       {[...Array(totalStars)].map((_, index) => {
         const { filled, half } = getFillState(index, displayRating);
         return (
@@ -196,8 +204,4 @@ const StarRatingWidget = ({ totalStars = 5 }) => {
 };
 
 export default StarRatingWidget;
-
 ```
-
-
-
